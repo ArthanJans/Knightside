@@ -1,15 +1,7 @@
 package me.arthan.knightside.models
 
 class Direction(deg: Int) {
-    var degrees: Int
-        get() = this.degrees
-        set(value) {
-            this.degrees=value
-        }
-
-    init {
-        this.degrees = deg
-    }
+    var degrees: Int = deg
 
 
 }
