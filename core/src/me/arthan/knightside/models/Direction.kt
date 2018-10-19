@@ -4,7 +4,7 @@ class Direction(deg: Int) {
     var degrees: Int
         get() = this.degrees
         set(value) {
-            this.degrees=value
+            this.degrees = value
         }
 
     init {
