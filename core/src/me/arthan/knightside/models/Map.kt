@@ -12,7 +12,7 @@ class Map(override var name: String, var filename: String): Model{
     val foregroundLayers: IntArray
     val collisionLayer: Array<IntArray>
 
-    private val fileDir = "assets/"
+    private val fileDir = ""
     private val fileExt = ".tmx"
 
     val filePath: String

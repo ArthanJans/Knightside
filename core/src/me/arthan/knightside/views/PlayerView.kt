@@ -11,7 +11,7 @@ class PlayerView(var player: Player, var spriteBatch: Batch): View {
     var sprite: Sprite = Sprite()
 
     init {
-        texture = Texture("assets/Player/image1.png")
+        texture = Texture("Player/image1.png")
     }
 
     override fun render(delta: Float) {

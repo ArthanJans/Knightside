@@ -23,18 +23,18 @@ fun add(dir1: Direction?, dir2: Direction?): Direction? {
     }
     var opposite = sin(dir1.radians) + sin(dir2.radians)
     var adjacent = cos(dir1.radians) + cos(dir2.radians)
-    if (adjacent == 0.0) {
-        if (opposite > 0) {
+    if (adjacent in -0.01 .. 0.01) {
+        if (opposite > 0.01) {
             return DOWN
-        } else if (opposite < 0) {
+        } else if (opposite < -0.01) {
             return UP
         } else {
             return null
         }
-    } else if (opposite == 0.0) {
-        if (adjacent > 0) {
+    } else if (opposite in -0.01 .. 0.01) {
+        if (adjacent > 0.01) {
             return RIGHT
-        } else if (adjacent < 0) {
+        } else if (adjacent < -0.01) {
             return LEFT
         } else {
             return null
@@ -51,7 +51,7 @@ fun add(dir1: Direction?, dir2: Direction?): Direction? {
     }
 }
 
-val UP = Direction(3*PI/2)
-val DOWN = Direction(PI/2)
+val UP = Direction(3 * PI / 2)
+val DOWN = Direction(PI / 2)
 val LEFT = Direction(PI)
 val RIGHT = Direction(0.0)
