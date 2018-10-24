@@ -15,7 +15,12 @@ class Direction(rad: Double) {
 
 }
 
-fun add(dir1: Direction, dir2: Direction): Direction? {
+fun add(dir1: Direction?, dir2: Direction?): Direction? {
+    if (dir1 == null) {
+        return dir2
+    } else if (dir2 == null) {
+        return dir1
+    }
     var opposite = sin(dir1.radians) + sin(dir2.radians)
     var adjacent = cos(dir1.radians) + cos(dir2.radians)
     if (adjacent == 0.0) {

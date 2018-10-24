@@ -8,19 +8,19 @@ import kotlin.math.floor
 
 class Map(override var name: String, var filename: String): Model{
 
-    val map = TmxMapLoader().load(filePath)
-    val tileWidth = map.properties.get("tilewidth", Int::class.java)
-    val tileHeight = map.properties.get("tileheight", Int::class.java)
+    val backgroundLayers: IntArray
+    val foregroundLayers: IntArray
+    val collisionLayer: Array<IntArray>
 
-    val backgroundLayers: Array<Int?>
-    val foregroundLayers: Array<Int?>
-    val collisionLayer: Array<Array<Int?>>
-
-    private val fileDir = ""
+    private val fileDir = "assets/"
     private val fileExt = ".tmx"
 
     val filePath: String
         get() = fileDir + filename + fileExt
+
+    val map = TmxMapLoader().load(filePath)
+    val tileWidth = map.properties.get("tilewidth", Int::class.java)
+    val tileHeight = map.properties.get("tileheight", Int::class.java)
 
     //initialises background and foreground layers
     init {
@@ -38,8 +38,8 @@ class Map(override var name: String, var filename: String): Model{
         }
         var foreIndex = 0
         var backIndex = 0
-        foregroundLayers = arrayOfNulls(foreground)
-        backgroundLayers = arrayOfNulls(background)
+        foregroundLayers = IntArray(foreground)
+        backgroundLayers = IntArray(background)
         for (layer in map.layers) {
             if (layer is TiledMapTileLayer) {
                 if (layer.properties.containsKey("foreground")) {
@@ -56,7 +56,7 @@ class Map(override var name: String, var filename: String): Model{
 
     //initialises collision layer
     init {
-        collisionLayer = arrayOf(arrayOfNulls(map.properties.get("width", Int::class.java)), arrayOfNulls(map.properties.get("height", Int::class.java)))
+        collisionLayer = Array(map.properties.get("width", Int::class.java), {IntArray(map.properties.get("height", Int::class.java))})
         var i = 0
         for (layer in map.layers) {
             if (layer is TiledMapTileLayer) {
@@ -80,12 +80,12 @@ class Map(override var name: String, var filename: String): Model{
     }
 
     fun doesOverlap(rect: Rectangle): Boolean {
-        for (x in floor(rect.x).toInt() .. ceil(rect.x).toInt()) {
-            for (y in floor(rect.y).toInt() .. ceil(rect.y).toInt()) {
+        for (x in floor(rect.x / 16).toInt() .. ceil(rect.x / 16).toInt()) {
+            for (y in floor(rect.y / 16).toInt() .. ceil(rect.y / 16).toInt()) {
                 if (collisionLayer[x][y] == 0) {
                     continue
                 }
-                if (Rectangle(x * tileWidth as Float, y * tileHeight as Float, tileWidth, tileHeight).overlaps(rect)) {
+                if (Rectangle((x * tileWidth).toFloat(), (y * tileHeight).toFloat(), tileWidth.toFloat(), tileHeight.toFloat()).overlaps(rect)) {
                     return true
                 }
             }
