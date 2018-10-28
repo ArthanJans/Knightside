@@ -6,7 +6,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer
 import com.badlogic.gdx.math.Vector2
 import me.arthan.knightside.models.Map
 
-class MapView(val map: Map): View {
+class MapView(val map: Map): View() {
     val renderer = OrthogonalTiledMapRenderer(map.map)
     val camera = OrthographicCamera((Gdx.graphics.width / 4).toFloat(), (Gdx.graphics.height / 4).toFloat())
     var offsetCamera = Vector2(0f, 0f)

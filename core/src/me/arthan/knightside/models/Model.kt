@@ -1,6 +1,6 @@
 package me.arthan.knightside.models
 
-interface Model {
-    var name: String
+abstract class Model {
+    abstract var name: String
 
 }

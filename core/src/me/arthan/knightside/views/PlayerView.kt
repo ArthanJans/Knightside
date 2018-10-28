@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.Sprite
 import me.arthan.knightside.models.entity.Player
 
-class PlayerView(var player: Player, var spriteBatch: Batch): View {
+class PlayerView(var player: Player, var spriteBatch: Batch): View() {
 
     var texture: Texture
     var sprite: Sprite = Sprite()

@@ -6,7 +6,7 @@ import com.badlogic.gdx.math.Rectangle
 import kotlin.math.ceil
 import kotlin.math.floor
 
-class Map(override var name: String, var filename: String): Model{
+class Map(override var name: String, var filename: String): Model(){
 
     val backgroundLayers: IntArray
     val foregroundLayers: IntArray

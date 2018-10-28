@@ -8,7 +8,7 @@ import me.arthan.knightside.models.Map
 import kotlin.math.cos
 import kotlin.math.sin
 
-open abstract class Entity(pos: Vector2, facing: Direction): Model {
+open abstract class Entity(pos: Vector2, facing: Direction): Model() {
     var pos = pos
     var facing = facing
 

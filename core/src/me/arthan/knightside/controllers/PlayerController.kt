@@ -9,7 +9,7 @@ import me.arthan.knightside.models.*
 import me.arthan.knightside.models.Map
 
 
-class PlayerController(val player: Player): Controller {
+class PlayerController(val player: Player): Controller() {
 
     override fun update(delta: Float, map: Map, entities: ArrayList<Entity>) {
         var dir = keyboardInput()
