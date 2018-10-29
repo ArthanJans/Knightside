@@ -9,12 +9,13 @@ import me.arthan.knightside.utils.decode
 import org.json.JSONArray
 import org.json.JSONObject
 import java.time.temporal.TemporalAdjusters.previous
-
+import java.time.temporal.TemporalAdjusters.previous
+import kotlin.math.PI
 
 
 class AnimationSprite(var filename: String) {
-    val json = "$filename.json"
     val img =  "$filename.png"
+    val json = "$filename.json"
     var jsonobj: JSONObject
 
     var dir: Direction?
@@ -91,34 +92,96 @@ class AnimationSprite(var filename: String) {
         current = down
     }
 
-    fun readAnimation(jsonarr: JSONArray, flip: Boolean = false): Animation<TextureRegion> {
+    private fun readAnimation(jsonarr: JSONArray, flip: Boolean = false): Animation<TextureRegion> {
         var textures = Array<TextureRegion>()
         for (i in 0 until jsonarr.length()) {
             var obj = jsonarr.getJSONObject(i)
             var textureRegion = TextureRegion(this.texture, obj.getInt("x") * this.spriteWidth, obj.getInt("y") * this.spriteHeight, this.spriteWidth, this.spriteHeight)
-            textureRegion.flip(false, flip)
+            textureRegion.flip(flip, false)
             for (j in 0 until (obj.getInt("ms") / 10.0).toInt()) {
                 textures.add(textureRegion)
             }
         }
-        var animation = Animation<TextureRegion>(10f, textures)
+        var animation = Animation<TextureRegion>(0.02f, textures)
         return animation
     }
 
-    fun update(dir: Direction, delta: Float, direction: Boolean) {
+    fun update(dir: Direction?, delta: Float, direction: Boolean) {
         if (this.dir != null)
             this.previous = this.dir
         this.dir = dir
         this.animationTime += delta
         if (direction) {
-            when (dir) {
-                LEFT -> current = left
-                RIGHT -> current = right
-                DOWN -> current = down
-                UP -> current = up
-                null -> current = idleDown
+            current = when (getRenderDir(dir)) {
+                LEFT -> left
+                RIGHT -> right
+                DOWN -> down
+                UP -> up
+                else -> {
+                    when (getRenderDir(this.previous)) {
+                        LEFT -> idleLeft
+                        RIGHT -> idleRight
+                        DOWN -> idleDown
+                        UP -> idleUp
+                        else -> idleDown
+                    }
+                }
             }
         }
+    }
+
+    fun getRenderDir(dir: Direction?): Direction? {
+        return if (dir == null){
+            null
+        } else {
+            return when (dir.radians) {
+                in PI/4 .. 3*PI/4 -> DOWN
+                in 5*PI/4 .. 7*PI/4 -> UP
+                in 3*PI/4 .. 5*PI/4 -> LEFT
+                else -> RIGHT
+            }
+        }
+    }
+
+    fun getRegion(): TextureRegion {
+        return current.getKeyFrame(animationTime, true) as TextureRegion
+    }
+
+    fun resetAnimationTime() {
+        this.animationTime = 0f
+    }
+
+    fun hit(dir: Direction) {
+        this.current = when (getRenderDir(dir)) {
+            LEFT -> hitLeft
+            RIGHT -> hitRight
+            UP -> hitUp
+            DOWN -> hitDown
+            else -> hitDown
+        }
+        resetAnimationTime()
+    }
+
+    fun attack() {
+        this.current = when (getRenderDir(this.previous)) {
+            LEFT -> attackLeft
+            RIGHT -> attackRight
+            UP -> attackUp
+            DOWN -> attackDown
+            else -> attackDown
+        }
+        resetAnimationTime()
+    }
+
+    fun action() {
+        this.current = when (getRenderDir(this.previous)) {
+            LEFT -> actionLeft
+            RIGHT -> actionRight
+            UP -> actionUp
+            DOWN -> actionDown
+            else -> actionDown
+        }
+        resetAnimationTime()
     }
 
 

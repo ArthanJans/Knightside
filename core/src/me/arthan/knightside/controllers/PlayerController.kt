@@ -13,9 +13,7 @@ class PlayerController(val player: Player): Controller() {
 
     override fun update(delta: Float, map: Map, entities: ArrayList<Entity>) {
         var dir = keyboardInput()
-        if (dir != null) {
-            player.move(dir, map)
-        }
+        player.move(dir, map)
 
     }
 
