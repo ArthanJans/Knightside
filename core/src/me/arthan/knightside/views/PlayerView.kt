@@ -11,7 +11,7 @@ class PlayerView(var player: Player, var spriteBatch: Batch): View() {
         animationSprite.update(player.getMoving(), delta, true)
 
         spriteBatch.begin()
-        spriteBatch.draw(animationSprite.getRegion(), player.pos.x - 24, player.pos.y - 24)
+        spriteBatch.draw(animationSprite.getRegion(), player.pos.x - animationSprite.spriteWidth / 2, player.pos.y - animationSprite.spriteHeight / 2)
         spriteBatch.end()
     }
 

@@ -11,7 +11,7 @@ class MonsterView(var monster: Monster, var spriteBatch: Batch): View() {
         animationSprite.update(monster.getMoving(), delta, true)
 
         spriteBatch.begin()
-        spriteBatch.draw(animationSprite.getRegion(), monster.pos.x - 24, monster.pos.y - 24)
+        spriteBatch.draw(animationSprite.getRegion(), monster.pos.x - animationSprite.spriteWidth / 2, monster.pos.y - animationSprite.spriteHeight / 2)
         spriteBatch.end()
     }
 }
