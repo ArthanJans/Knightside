@@ -22,6 +22,8 @@ class MonsterLoader(var filepath: String) {
         jsonobj = decode(filepath)
         model = Monster(Vector2(35f * 16 + 8, 31f * 16 + 8), UP)
         model.name = jsonobj.getString("name")
+        model.health = jsonobj.getInt("health")
+        model.mana = jsonobj.getInt("mana")
         view = MonsterView(model, SpriteBatch())
         controller = MonsterController(model)
         for(behaviour in jsonobj.get("behaviours").asStringArray()) {

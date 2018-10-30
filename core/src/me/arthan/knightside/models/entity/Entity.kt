@@ -9,6 +9,10 @@ import kotlin.math.cos
 import kotlin.math.sin
 
 open abstract class Entity(pos: Vector2, facing: Direction): Model() {
+
+    abstract var health: Int
+    abstract var mana: Int
+
     var pos = pos
     var facing = facing
     var moving = false
