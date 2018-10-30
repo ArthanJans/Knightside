@@ -1,9 +1,9 @@
 package me.arthan.knightside.models
 
-import kotlin.math.cos
-import kotlin.math.sin
 import kotlin.math.PI
 import kotlin.math.atan
+import kotlin.math.cos
+import kotlin.math.sin
 
 class Direction(rad: Double) {
     var radians: Double = rad

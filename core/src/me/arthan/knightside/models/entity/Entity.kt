@@ -3,8 +3,8 @@ package me.arthan.knightside.models.entity
 import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.math.Vector2
 import me.arthan.knightside.models.Direction
-import me.arthan.knightside.models.Model
 import me.arthan.knightside.models.Map
+import me.arthan.knightside.models.Model
 import kotlin.math.cos
 import kotlin.math.sin
 

@@ -4,19 +4,16 @@ import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.Animation
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.utils.Array
+import com.badlogic.gdx.utils.JsonValue
 import me.arthan.knightside.models.*
 import me.arthan.knightside.utils.decode
-import org.json.JSONArray
-import org.json.JSONObject
-import java.time.temporal.TemporalAdjusters.previous
-import java.time.temporal.TemporalAdjusters.previous
 import kotlin.math.PI
 
 
 class AnimationSprite(var filename: String) {
     val img =  "$filename.png"
     val json = "$filename.json"
-    var jsonobj: JSONObject
+    var jsonobj: JsonValue
 
     var dir: Direction?
     var previous: Direction?
@@ -61,49 +58,48 @@ class AnimationSprite(var filename: String) {
         spriteWidth = jsonobj.getInt("width")
         spriteHeight = jsonobj.getInt("height")
 
-        val animations = jsonobj.getJSONObject("animations")
-        val idle = animations.getJSONObject("idle")
-        val move = animations.getJSONObject("move")
-        val attack = animations.getJSONObject("attack")
-        val hit = animations.getJSONObject("hit")
-        val action = animations.getJSONObject("action")
+        val animations = jsonobj.require("animations")
+        val idle = animations.require("idle")
+        val move = animations.require("move")
+        val attack = animations.require("attack")
+        val hit = animations.require("hit")
+        val action = animations.require("action")
 
-        idleLeft = readAnimation(idle.getJSONArray("side"), idle.getBoolean("flipside"))
-        idleRight = readAnimation(idle.getJSONArray("side"))
-        idleUp = readAnimation(idle.getJSONArray("up"))
-        idleDown = readAnimation(idle.getJSONArray("down"))
-        left = readAnimation(move.getJSONArray("side"), idle.getBoolean("flipside"))
-        right = readAnimation(move.getJSONArray("side"))
-        up = readAnimation(move.getJSONArray("up"))
-        down = readAnimation(move.getJSONArray("down"))
-        attackLeft = readAnimation(attack.getJSONArray("side"), idle.getBoolean("flipside"))
-        attackRight = readAnimation(attack.getJSONArray("side"))
-        attackUp = readAnimation(attack.getJSONArray("up"))
-        attackDown = readAnimation(attack.getJSONArray("down"))
-        hitLeft = readAnimation(hit.getJSONArray("side"), idle.getBoolean("flipside"))
-        hitRight = readAnimation(hit.getJSONArray("side"))
-        hitUp = readAnimation(hit.getJSONArray("up"))
-        hitDown = readAnimation(hit.getJSONArray("down"))
-        actionLeft = readAnimation(action.getJSONArray("side"), idle.getBoolean("flipside"))
-        actionRight = readAnimation(action.getJSONArray("side"))
-        actionUp = readAnimation(action.getJSONArray("up"))
-        actionDown = readAnimation(action.getJSONArray("down"))
+        idleLeft = readAnimation(idle.require("side"), idle.getBoolean("flipside"))
+        idleRight = readAnimation(idle.require("side"))
+        idleUp = readAnimation(idle.require("up"))
+        idleDown = readAnimation(idle.require("down"))
+        left = readAnimation(move.require("side"), idle.getBoolean("flipside"))
+        right = readAnimation(move.require("side"))
+        up = readAnimation(move.require("up"))
+        down = readAnimation(move.require("down"))
+        attackLeft = readAnimation(attack.require("side"), idle.getBoolean("flipside"))
+        attackRight = readAnimation(attack.require("side"))
+        attackUp = readAnimation(attack.require("up"))
+        attackDown = readAnimation(attack.require("down"))
+        hitLeft = readAnimation(hit.require("side"), idle.getBoolean("flipside"))
+        hitRight = readAnimation(hit.require("side"))
+        hitUp = readAnimation(hit.require("up"))
+        hitDown = readAnimation(hit.require("down"))
+        actionLeft = readAnimation(action.require("side"), idle.getBoolean("flipside"))
+        actionRight = readAnimation(action.require("side"))
+        actionUp = readAnimation(action.require("up"))
+        actionDown = readAnimation(action.require("down"))
 
         current = down
     }
 
-    private fun readAnimation(jsonarr: JSONArray, flip: Boolean = false): Animation<TextureRegion> {
+    private fun readAnimation(jsonarr: JsonValue, flip: Boolean = false): Animation<TextureRegion> {
         var textures = Array<TextureRegion>()
-        for (i in 0 until jsonarr.length()) {
-            var obj = jsonarr.getJSONObject(i)
+        for (i in 0 until jsonarr.size) {
+            var obj = jsonarr.require(i)
             var textureRegion = TextureRegion(this.texture, obj.getInt("x") * this.spriteWidth, obj.getInt("y") * this.spriteHeight, this.spriteWidth, this.spriteHeight)
             textureRegion.flip(flip, false)
             for (j in 0 until (obj.getInt("ms") / 10.0).toInt()) {
                 textures.add(textureRegion)
             }
         }
-        var animation = Animation<TextureRegion>(0.02f, textures)
-        return animation
+        return Animation(0.02f, textures)
     }
 
     fun update(dir: Direction?, delta: Float, direction: Boolean) {
@@ -130,7 +126,7 @@ class AnimationSprite(var filename: String) {
         }
     }
 
-    fun getRenderDir(dir: Direction?): Direction? {
+    private fun getRenderDir(dir: Direction?): Direction? {
         return if (dir == null){
             null
         } else {

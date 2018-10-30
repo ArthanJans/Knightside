@@ -1,11 +1,11 @@
 package me.arthan.knightside.controllers
 
-import me.arthan.knightside.models.entity.Entity
-import me.arthan.knightside.models.entity.Player
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
 import me.arthan.knightside.models.*
 import me.arthan.knightside.models.Map
+import me.arthan.knightside.models.entity.Entity
+import me.arthan.knightside.models.entity.Player
 
 
 class PlayerController(val player: Player): Controller() {

@@ -1,11 +1,10 @@
 package me.arthan.knightside.utils
 
 import com.badlogic.gdx.Gdx
-import org.json.JSONObject
-import java.io.File
+import com.badlogic.gdx.utils.JsonReader
+import com.badlogic.gdx.utils.JsonValue
 
-fun decode(filename: String): JSONObject {
-    var text = Gdx.files.internal(filename).readString()
-    var json = JSONObject(text)
-    return json
+fun decode(filename: String): JsonValue {
+    val text = Gdx.files.internal(filename).readString()
+    return JsonReader().parse(text)
 }
