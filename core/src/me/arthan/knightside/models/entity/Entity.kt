@@ -27,15 +27,15 @@ open abstract class Entity(pos: Vector2, facing: Direction): Model() {
             var x = cos(dir.radians).toFloat()
             var y = -1 * sin(dir.radians).toFloat()
             this.pos.add(x, y)
-            var rect = Rectangle(this.pos.x - 7, this.pos.y - 8, 14f, 8f)
+            var rect = Rectangle(this.pos.x - 5, this.pos.y - 8, 12f, 8f)
             if (map.doesOverlap(rect)) {
                 this.pos = Vector2(oldpos)
                 this.pos.add(x, 0f)
-                var rect = Rectangle(this.pos.x - 7, this.pos.y - 8, 14f, 8f)
+                var rect = Rectangle(this.pos.x - 5, this.pos.y - 8, 12f, 8f)
                 if (map.doesOverlap(rect)) {
                     this.pos = Vector2(oldpos)
                     this.pos.add(0f, y)
-                    var rect = Rectangle(this.pos.x - 7, this.pos.y - 8, 14f, 8f)
+                    var rect = Rectangle(this.pos.x - 5, this.pos.y - 8, 12f, 8f)
                     if (map.doesOverlap(rect)) {
                         this.pos = Vector2(oldpos)
                     }
