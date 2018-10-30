@@ -10,7 +10,7 @@ class MonsterController(val monster: Monster): Controller() {
 
     val rand = Random()
 
-    val dirs: DoubleArray = doubleArrayOf(0.0, 90.0, 180.0, 270.0, 360.0)
+    val dirs: DoubleArray = doubleArrayOf(0.0, 0.5, 1.0, 1.5)
 
     override fun update(delta: Float, map: Map, entities: ArrayList<Entity>) {
         if(rand.nextInt(100) == 4) {
