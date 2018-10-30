@@ -2,7 +2,6 @@ package me.arthan.knightside.controllers
 
 import me.arthan.knightside.models.entity.Entity
 import me.arthan.knightside.models.entity.Player
-import sun.audio.AudioPlayer.player
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
 import me.arthan.knightside.models.*
