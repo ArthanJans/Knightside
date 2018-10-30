@@ -1,3 +1,4 @@
 {
-  "name": "Slime"
+  "name": "Slime",
+  "behaviours": ["random_move"]
 }
