@@ -5,12 +5,11 @@ import com.badlogic.gdx.Screen
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.math.Vector2
 import me.arthan.knightside.controllers.PlayerController
-import me.arthan.knightside.models.Direction
-import me.arthan.knightside.views.MapView
 import me.arthan.knightside.models.Map
 import me.arthan.knightside.models.UP
 import me.arthan.knightside.models.entity.Entity
 import me.arthan.knightside.models.entity.Player
+import me.arthan.knightside.views.MapView
 import me.arthan.knightside.views.PlayerView
 
 class MainScreen: Screen{
