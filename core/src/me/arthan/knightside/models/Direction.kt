@@ -6,6 +6,9 @@ import kotlin.math.cos
 import kotlin.math.sin
 
 class Direction(rad: Double) {
+
+    constructor(degrees: Int): this(degrees/180 * PI)
+    
     var radians: Double = rad
     var degrees: Double
         get() = radians/PI * 180
