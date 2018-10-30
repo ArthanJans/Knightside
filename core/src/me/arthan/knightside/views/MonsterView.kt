@@ -5,7 +5,7 @@ import me.arthan.knightside.models.entity.Player
 import me.arthan.knightside.models.entity.monster.Monster
 
 class MonsterView(var monster: Monster, var spriteBatch: Batch): View() {
-    private var animationSprite = AnimationSprite("Monster/image1")
+    private var animationSprite = AnimationSprite("Monster/" + monster.name.toLowerCase())
 
     override fun render(delta: Float) {
         animationSprite.update(monster.getMoving(), delta, true)
