@@ -32,7 +32,7 @@ class MainScreen: Screen{
     }
 
     init {
-
+//        var controller = ControllerLoader("controller.json")
     }
 
     override fun show() {

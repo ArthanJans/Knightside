@@ -1,10 +1,14 @@
 package me.arthan.knightside.views
 
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
+import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer
 import com.badlogic.gdx.math.Vector2
 import me.arthan.knightside.models.Map
+import kotlin.math.floor
+import kotlin.math.round
 
 class MapView(val map: Map): View() {
     val renderer = OrthogonalTiledMapRenderer(map.map)
@@ -45,7 +49,12 @@ class MapView(val map: Map): View() {
         } else if (offsetCamera.y > (map.map.properties.get("height", Int::class.java) * 16) - (camera.viewportHeight / 2)) {
             offsetCamera.y = (map.map.properties.get("height", Int::class.java) * 16) - (camera.viewportHeight / 2)
         }
-
+        if (offsetCamera.x % 16 == 0f) {
+            offsetCamera.x += 0.1f
+        }
+        if (offsetCamera.y % 16 == 0f) {
+            offsetCamera.y += 0.1f
+        }
         camera.position.set(offsetCamera, 0f)
         camera.update()
         renderer.setView(camera)

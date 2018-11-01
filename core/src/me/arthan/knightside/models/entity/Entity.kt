@@ -6,16 +6,16 @@ import me.arthan.knightside.models.Direction
 import me.arthan.knightside.models.Map
 import me.arthan.knightside.models.Model
 import kotlin.math.cos
+import kotlin.math.round
 import kotlin.math.sin
 
-open abstract class Entity(pos: Vector2, facing: Direction): Model() {
+open abstract class Entity(var pos: Vector2, var facing: Direction): Model() {
 
     abstract var health: Int
     abstract var mana: Int
 
-    var pos = pos
-    var facing = facing
     var moving = false
+    abstract var speed: Float
 
     fun move(dir: Direction?, map: Map) {
         var oldpos = Vector2(this.pos)
@@ -24,8 +24,8 @@ open abstract class Entity(pos: Vector2, facing: Direction): Model() {
         } else {
             moving = true
 
-            var x = cos(dir.radians).toFloat()
-            var y = -1 * sin(dir.radians).toFloat()
+            var x = cos(dir.radians).toFloat() * this.speed
+            var y = -1 * sin(dir.radians).toFloat() * this.speed
             this.pos.add(x, y)
             var rect = Rectangle(this.pos.x - 5, this.pos.y - 8, 12f, 8f)
             if (map.doesOverlap(rect)) {
