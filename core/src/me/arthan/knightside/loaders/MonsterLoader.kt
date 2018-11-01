@@ -1,4 +1,4 @@
-package me.arthan.knightside
+package me.arthan.knightside.loaders
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.math.Vector2

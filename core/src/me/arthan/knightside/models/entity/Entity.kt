@@ -45,6 +45,14 @@ open abstract class Entity(var pos: Vector2, var facing: Direction): Model() {
         }
     }
 
+    fun attack(dir: Direction?) {
+        moving = false
+        if (dir != null) {
+            facing = dir
+        }
+
+    }
+
     fun getMoving(): Direction? {
         if (moving) {
             return facing

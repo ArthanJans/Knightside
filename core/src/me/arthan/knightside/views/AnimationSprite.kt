@@ -102,28 +102,30 @@ class AnimationSprite(var filename: String) {
         return Animation(0.02f, textures)
     }
 
-    fun update(dir: Direction?, delta: Float, direction: Boolean) {
+    fun update(dir: Direction?, delta: Float, short: Boolean): Boolean {
         if (this.dir != null)
             this.previous = this.dir
         this.dir = dir
         this.animationTime += delta
-        if (direction) {
-            current = when (getRenderDir(dir)) {
-                LEFT -> left
-                RIGHT -> right
-                DOWN -> down
-                UP -> up
-                else -> {
-                    when (getRenderDir(this.previous)) {
-                        LEFT -> idleLeft
-                        RIGHT -> idleRight
-                        DOWN -> idleDown
-                        UP -> idleUp
-                        else -> idleDown
-                    }
+        if (short) {
+            return current.isAnimationFinished(animationTime)
+        }
+        current = when (getRenderDir(dir)) {
+            LEFT -> left
+            RIGHT -> right
+            DOWN -> down
+            UP -> up
+            else -> {
+                when (getRenderDir(this.previous)) {
+                    LEFT -> idleLeft
+                    RIGHT -> idleRight
+                    DOWN -> idleDown
+                    UP -> idleUp
+                    else -> idleDown
                 }
             }
         }
+        return true
     }
 
     private fun getRenderDir(dir: Direction?): Direction? {
@@ -159,14 +161,20 @@ class AnimationSprite(var filename: String) {
     }
 
     fun attack() {
-        this.current = when (getRenderDir(this.previous)) {
-            LEFT -> attackLeft
-            RIGHT -> attackRight
-            UP -> attackUp
-            DOWN -> attackDown
-            else -> attackDown
+        if (! isAttack()) {
+            this.current = when (getRenderDir(this.previous)) {
+                LEFT -> attackLeft
+                RIGHT -> attackRight
+                UP -> attackUp
+                DOWN -> attackDown
+                else -> attackDown
+            }
         }
         resetAnimationTime()
+    }
+
+    fun isAttack(): Boolean {
+        return (this.current == attackLeft || this.current == attackRight || this.current == attackUp || this.current == attackDown)
     }
 
     fun action() {

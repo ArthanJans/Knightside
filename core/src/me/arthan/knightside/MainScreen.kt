@@ -4,15 +4,13 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Screen
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.math.Vector2
-import me.arthan.knightside.controllers.MonsterController
 import me.arthan.knightside.controllers.PlayerController
+import me.arthan.knightside.loaders.MonsterLoader
 import me.arthan.knightside.models.Map
 import me.arthan.knightside.models.UP
 import me.arthan.knightside.models.entity.Entity
 import me.arthan.knightside.models.entity.EntityContainer
 import me.arthan.knightside.models.entity.Player
-import me.arthan.knightside.models.entity.monster.Monster
-import me.arthan.knightside.views.MonsterView
 import me.arthan.knightside.views.MapView
 import me.arthan.knightside.views.PlayerView
 
