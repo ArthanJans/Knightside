@@ -6,7 +6,6 @@ import me.arthan.knightside.models.Direction
 import me.arthan.knightside.models.Map
 import me.arthan.knightside.models.Model
 import kotlin.math.cos
-import kotlin.math.round
 import kotlin.math.sin
 
 open abstract class Entity(var pos: Vector2, var facing: Direction): Model() {
@@ -16,10 +15,11 @@ open abstract class Entity(var pos: Vector2, var facing: Direction): Model() {
 
     var moving = false
     abstract var speed: Float
+    abstract var attack: Direction?
 
     fun move(dir: Direction?, map: Map) {
         var oldpos = Vector2(this.pos)
-        if (dir == null) {
+        if (dir == null || attack != null) {
             moving = false
         } else {
             moving = true
@@ -49,15 +49,22 @@ open abstract class Entity(var pos: Vector2, var facing: Direction): Model() {
         moving = false
         if (dir != null) {
             facing = dir
+            attack = dir
+        } else {
+            attack = facing
         }
 
     }
 
-    fun getMoving(): Direction? {
-        if (moving) {
-            return facing
+    fun finishAttack() {
+        attack = null
+    }
+
+    fun getMovingDir(): Direction? {
+        return if (moving) {
+            facing
         } else {
-            return null
+            null
         }
     }
 

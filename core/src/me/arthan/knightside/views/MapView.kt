@@ -1,14 +1,10 @@
 package me.arthan.knightside.views
 
 import com.badlogic.gdx.Gdx
-import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
-import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer
 import com.badlogic.gdx.math.Vector2
 import me.arthan.knightside.models.Map
-import kotlin.math.floor
-import kotlin.math.round
 
 class MapView(val map: Map): View() {
     val renderer = OrthogonalTiledMapRenderer(map.map)

@@ -160,17 +160,19 @@ class AnimationSprite(var filename: String) {
         resetAnimationTime()
     }
 
-    fun attack() {
+    fun attack(dir: Direction, delta: Float): Boolean {
         if (! isAttack()) {
-            this.current = when (getRenderDir(this.previous)) {
+            this.current = when (getRenderDir(dir)) {
                 LEFT -> attackLeft
                 RIGHT -> attackRight
                 UP -> attackUp
                 DOWN -> attackDown
                 else -> attackDown
             }
+            resetAnimationTime()
         }
-        resetAnimationTime()
+        return update(null, delta, true)
+
     }
 
     fun isAttack(): Boolean {

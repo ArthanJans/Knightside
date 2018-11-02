@@ -1,12 +1,10 @@
 package me.arthan.knightside.controllers
 
 import me.arthan.knightside.controllers.behaviour.Behaviour
-import me.arthan.knightside.models.Direction
 import me.arthan.knightside.models.Map
 import me.arthan.knightside.models.entity.Entity
 import me.arthan.knightside.models.entity.monster.Monster
 import java.util.*
-import kotlin.math.PI
 
 class MonsterController(val monster: Monster): Controller() {
 

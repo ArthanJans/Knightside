@@ -6,8 +6,8 @@ import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.math.Vector2
 import me.arthan.knightside.controllers.PlayerController
 import me.arthan.knightside.loaders.MonsterLoader
+import me.arthan.knightside.models.DOWN
 import me.arthan.knightside.models.Map
-import me.arthan.knightside.models.UP
 import me.arthan.knightside.models.entity.Entity
 import me.arthan.knightside.models.entity.EntityContainer
 import me.arthan.knightside.models.entity.Player
@@ -16,7 +16,7 @@ import me.arthan.knightside.views.PlayerView
 
 class MainScreen: Screen{
     var mapView = MapView(Map("Main", "untitled"))
-    var player = Player(Vector2(35f * 16 + 8, 31f * 16 + 8), UP)
+    var player = Player(Vector2(35f * 16 + 8, 31f * 16 + 8), DOWN)
     var playerView = PlayerView(player, mapView.renderer.batch)
     var playerController = PlayerController(player)
     var entities = ArrayList<Entity>()
@@ -26,6 +26,7 @@ class MainScreen: Screen{
     init {
         var monster = MonsterLoader("Monster/monster.json")
         monster.view.spriteBatch = mapView.renderer.batch
+        //TODO("Maybe change the use of EntityContainer class to just use view and controller separately")
         monsters.add(EntityContainer(monster.model, monster.view, monster.controller))
     }
 

@@ -8,7 +8,14 @@ class PlayerView(var player: Player, var spriteBatch: Batch): View() {
     private var animationSprite = AnimationSprite("Player/image1")
 
     override fun render(delta: Float) {
-        animationSprite.update(player.getMoving(), delta, false)
+        var check = player.attack
+        if (check != null) {
+            if (animationSprite.attack(check, delta)) {
+                player.finishAttack()
+            }
+        } else {
+            animationSprite.update(player.getMovingDir(), delta, false)
+        }
 
         spriteBatch.begin()
         spriteBatch.draw(animationSprite.getRegion(), player.pos.x - animationSprite.spriteWidth / 2, player.pos.y - animationSprite.spriteHeight / 2)

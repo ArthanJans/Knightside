@@ -2,25 +2,22 @@ package me.arthan.knightside.loaders
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.math.Vector2
-import com.badlogic.gdx.utils.JsonValue
 import me.arthan.knightside.controllers.MonsterController
 import me.arthan.knightside.controllers.behaviour.RandomMoveBehaviour
-import me.arthan.knightside.models.UP
+import me.arthan.knightside.models.DOWN
 import me.arthan.knightside.models.entity.monster.Monster
 import me.arthan.knightside.utils.decode
 import me.arthan.knightside.views.MonsterView
 
 class MonsterLoader(var filepath: String) {
 
-    var jsonobj: JsonValue
+    var jsonobj = decode(filepath)
 
-    var model: Monster
+    var model: Monster = Monster(Vector2(35f * 16 + 8, 31f * 16 + 8), DOWN)
     var view: MonsterView
     var controller: MonsterController
 
     init {
-        jsonobj = decode(filepath)
-        model = Monster(Vector2(35f * 16 + 8, 31f * 16 + 8), UP)
         model.name = jsonobj.getString("name")
         model.health = jsonobj.getInt("health")
         model.mana = jsonobj.getInt("mana")
