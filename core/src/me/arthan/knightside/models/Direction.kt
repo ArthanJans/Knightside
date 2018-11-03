@@ -5,17 +5,31 @@ import kotlin.math.atan
 import kotlin.math.cos
 import kotlin.math.sin
 
-class Direction(rad: Double) {
+class Direction(radians: Double) {
 
-    constructor(degrees: Int): this(degrees/180 * PI)
 
-    var radians: Double = rad
+//    constructor(degrees: Int): this(degrees/180 * PI)
+
+    var radians: Double = radians % (2 * PI)
+        set(value){
+            println(value)
+            field = value % (2 * PI)
+            println(field)
+        }
+
     var degrees: Double
         get() = radians/PI * 180
         set(value){
             radians = value / 180 * PI
         }
 
+}
+
+fun opposite(dir: Direction): Direction {
+    println(dir.degrees)
+    val dir2 = Direction(dir.radians + PI)
+    println(dir2.degrees)
+    return dir2
 }
 
 fun add(dir1: Direction?, dir2: Direction?): Direction? {
@@ -58,3 +72,5 @@ val UP = Direction(3 * PI / 2)
 val DOWN = Direction(PI / 2)
 val LEFT = Direction(PI)
 val RIGHT = Direction(0.0)
+
+val DIRS = arrayOf(UP, DOWN, LEFT, RIGHT)

@@ -149,15 +149,22 @@ class AnimationSprite(var filename: String) {
         this.animationTime = 0f
     }
 
-    fun hit(dir: Direction) {
-        this.current = when (getRenderDir(dir)) {
-            LEFT -> hitLeft
-            RIGHT -> hitRight
-            UP -> hitUp
-            DOWN -> hitDown
-            else -> hitDown
+    fun hit(dir: Direction, delta: Float): Boolean {
+        if (!isHit()) {
+            this.current = when (getRenderDir(dir)) {
+                LEFT -> hitLeft
+                RIGHT -> hitRight
+                UP -> hitUp
+                DOWN -> hitDown
+                else -> hitDown
+            }
+            resetAnimationTime()
         }
-        resetAnimationTime()
+        return update(null, delta, true)
+    }
+
+    fun isHit(): Boolean {
+        return (this.current == hitLeft || this.current == hitRight || this.current == hitUp || this.current == hitDown)
     }
 
     fun attack(dir: Direction, delta: Float): Boolean {

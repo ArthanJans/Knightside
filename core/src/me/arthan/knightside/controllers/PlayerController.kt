@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
 import me.arthan.knightside.models.*
 import me.arthan.knightside.models.Map
-import me.arthan.knightside.models.entity.Entity
 import me.arthan.knightside.models.entity.Player
 
 
@@ -14,7 +13,7 @@ class PlayerController(val player: Player): Controller() {
         var attack = Gdx.input.isKeyPressed(Input.Keys.SPACE)
         var dir = keyboardInput()
         if (attack) {
-            player.attack(dir)
+            player.attack(dir, map)
         } else {
             player.move(dir, map)
         }

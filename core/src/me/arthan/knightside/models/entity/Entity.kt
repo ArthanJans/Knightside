@@ -5,6 +5,8 @@ import com.badlogic.gdx.math.Vector2
 import me.arthan.knightside.models.Direction
 import me.arthan.knightside.models.Map
 import me.arthan.knightside.models.Model
+import me.arthan.knightside.models.opposite
+import java.time.LocalTime
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -15,10 +17,11 @@ open abstract class Entity(var pos: Vector2, var facing: Direction): Model() {
 
     var moving = false
     abstract var speed: Float
-    abstract var attack: Direction?
+    var attack: Direction? = null
+    var hit: Direction? = null
 
     fun move(dir: Direction?, map: Map) {
-        if (dir == null || attack != null) {
+        if (dir == null || attack != null  || hit != null) {
             moving = false
         } else {
             moving = true
@@ -48,15 +51,31 @@ open abstract class Entity(var pos: Vector2, var facing: Direction): Model() {
         return Rectangle(pos.x - 5, pos.y - 5, 10f, 10f)
     }
 
-    fun attack(dir: Direction?) {
+    fun attack(dir: Direction?, map: Map) {
         moving = false
-        if (dir != null) {
-            facing = dir
-            attack = dir
-        } else {
-            attack = facing
-        }
+        if (attack == null) {
+            println(LocalTime.now())
+            if (dir != null) {
+                facing = dir
+                attack = dir
+            } else {
+                attack = facing
+            }
+            val atk = this.attack
+            if (atk != null) {
+                var hitRange = Vector2(pos)
+                var x = cos(atk.radians).toFloat() * 16
+                var y = -1 * sin(atk.radians).toFloat() * 16
+                hitRange.add(x, y)
+                var entities = map.overlapEntities(getCollsionRect(hitRange))
 
+                for (entity in entities) {
+                    if (entity != this) {
+                        entity.hit(1, opposite(atk))
+                    }
+                }
+            }
+        }
     }
 
     fun finishAttack() {
@@ -69,6 +88,27 @@ open abstract class Entity(var pos: Vector2, var facing: Direction): Model() {
         } else {
             null
         }
+    }
+
+    fun hit(damage: Int, dir: Direction) {
+        println(LocalTime.now())
+        println("" + this.name + " got hit")
+        this.health -= damage
+        if (this.health <= 0){
+            this.die()
+        } else {
+            this.hit = dir
+            this.facing = dir
+        }
+
+    }
+
+    fun finishHit() {
+        this.hit = null
+    }
+
+    fun die() {
+        println("" + this.name + " died")
     }
 
 

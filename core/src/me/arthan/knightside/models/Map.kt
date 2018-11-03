@@ -1,5 +1,6 @@
 package me.arthan.knightside.models
 
+import com.badlogic.gdx.maps.tiled.TiledMap
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer
 import com.badlogic.gdx.maps.tiled.TmxMapLoader
 import com.badlogic.gdx.math.Rectangle
@@ -18,12 +19,12 @@ class Map(override var name: String, var filename: String): Model(){
     private val fileDir = ""
     private val fileExt = ".tmx"
 
-    val filePath: String
+    private val filePath: String
         get() = fileDir + filename + fileExt
 
-    val map = TmxMapLoader().load(filePath)
-    val tileWidth = map.properties.get("tilewidth", Int::class.java)
-    val tileHeight = map.properties.get("tileheight", Int::class.java)
+    val map: TiledMap = TmxMapLoader().load(filePath)
+    val tileWidth: Int = map.properties.get("tilewidth", Int::class.java)
+    val tileHeight: Int = map.properties.get("tileheight", Int::class.java)
 
     //initialises background and foreground layers
     init {
@@ -83,6 +84,14 @@ class Map(override var name: String, var filename: String): Model(){
     }
 
     fun doesOverlap(rect: Rectangle): Boolean {
+        return doesOverlapMap(rect) || doesOverlapEntity(rect)
+    }
+
+    fun doesOverlapEntity(rect: Rectangle): Boolean {
+        return overlapEntities(rect).size > 0
+    }
+
+    fun doesOverlapMap(rect: Rectangle): Boolean {
         for (x in floor(rect.x / 16).toInt() .. ceil(rect.x / 16).toInt()) {
             for (y in floor(rect.y / 16).toInt() .. ceil(rect.y / 16).toInt()) {
                 if (collisionLayer[x][y] == 0) {
@@ -93,13 +102,17 @@ class Map(override var name: String, var filename: String): Model(){
                 }
             }
         }
+        return false
+    }
+
+    fun overlapEntities(rect: Rectangle): ArrayList<Entity> {
+        var list = ArrayList<Entity>()
         for (entity in entities) {
             if (entity.getCollsionRect().overlaps(rect) && entity.getCollsionRect() != rect) {
-                return true
+                list.add(entity)
             }
         }
-
-        return false
+        return list
     }
 
 }

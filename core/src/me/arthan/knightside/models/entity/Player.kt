@@ -8,5 +8,4 @@ class Player(pos: Vector2, facing: Direction): Entity(pos, facing){
     override var health = 100
     override var mana = 100
     override var speed = 1f
-    override var attack: Direction? = null
 }

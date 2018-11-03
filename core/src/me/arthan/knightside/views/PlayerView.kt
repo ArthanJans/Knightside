@@ -12,6 +12,7 @@ class PlayerView(var player: Player, var spriteBatch: Batch): View() {
         if (check != null) {
             if (animationSprite.attack(check, delta)) {
                 player.finishAttack()
+                animationSprite.update(player.getMovingDir(), 0f, false)
             }
         } else {
             animationSprite.update(player.getMovingDir(), delta, false)
