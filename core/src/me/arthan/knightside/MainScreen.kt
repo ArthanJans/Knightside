@@ -8,7 +8,6 @@ import me.arthan.knightside.controllers.PlayerController
 import me.arthan.knightside.loaders.MonsterLoader
 import me.arthan.knightside.models.DOWN
 import me.arthan.knightside.models.Map
-import me.arthan.knightside.models.entity.Entity
 import me.arthan.knightside.models.entity.EntityContainer
 import me.arthan.knightside.models.entity.Player
 import me.arthan.knightside.views.MapView
@@ -16,18 +15,19 @@ import me.arthan.knightside.views.PlayerView
 
 class MainScreen: Screen{
     var mapView = MapView(Map("Main", "untitled"))
-    var player = Player(Vector2(35f * 16 + 8, 31f * 16 + 8), DOWN)
+    var player = Player(Vector2(35f * 16 + 8, 28f * 16 + 8), DOWN)
     var playerView = PlayerView(player, mapView.renderer.batch)
     var playerController = PlayerController(player)
-    var entities = ArrayList<Entity>()
 
     var monsters = ArrayList<EntityContainer>()
 
     init {
+        mapView.map.entities.add(player)
         var monster = MonsterLoader("Monster/monster.json")
         monster.view.spriteBatch = mapView.renderer.batch
         //TODO("Maybe change the use of EntityContainer class to just use view and controller separately")
         monsters.add(EntityContainer(monster.model, monster.view, monster.controller))
+        mapView.map.entities.add(monster.model)
     }
 
     init {
@@ -43,9 +43,9 @@ class MainScreen: Screen{
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
 
         mapView.update(Vector2(player.pos.x, player.pos.y), delta)
-        playerController.update(delta, mapView.map, entities)
+        playerController.update(delta, mapView.map)
         for(entity in monsters) {
-            entity.controller.update(delta, mapView.map, entities)
+            entity.controller.update(delta, mapView.map)
         }
 
         mapView.renderBackground(delta)

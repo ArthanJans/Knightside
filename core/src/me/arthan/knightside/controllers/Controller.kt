@@ -4,5 +4,5 @@ import me.arthan.knightside.models.Map
 import me.arthan.knightside.models.entity.Entity
 
 abstract class Controller{
-    abstract fun update(delta: Float, map: Map, entities: ArrayList<Entity>)
+    abstract fun update(delta: Float, map: Map)
 }

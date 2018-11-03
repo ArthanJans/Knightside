@@ -10,7 +10,7 @@ class MonsterController(val monster: Monster): Controller() {
 
     var behaviours = ArrayList<Behaviour>()
 
-    override fun update(delta: Float, map: Map, entities: ArrayList<Entity>) {
+    override fun update(delta: Float, map: Map) {
         for(behaviour in behaviours) {
             behaviour.update(delta, monster)
         }

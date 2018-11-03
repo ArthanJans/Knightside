@@ -44,7 +44,7 @@ open abstract class Entity(var pos: Vector2, var facing: Direction): Model() {
         }
     }
 
-    fun getCollsionRect(pos: Vector2): Rectangle {
+    fun getCollsionRect(pos: Vector2 = this.pos): Rectangle {
         return Rectangle(pos.x - 5, pos.y - 5, 10f, 10f)
     }
 

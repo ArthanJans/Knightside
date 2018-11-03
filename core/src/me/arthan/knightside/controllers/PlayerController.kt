@@ -10,7 +10,7 @@ import me.arthan.knightside.models.entity.Player
 
 class PlayerController(val player: Player): Controller() {
 
-    override fun update(delta: Float, map: Map, entities: ArrayList<Entity>) {
+    override fun update(delta: Float, map: Map) {
         var attack = Gdx.input.isKeyPressed(Input.Keys.SPACE)
         var dir = keyboardInput()
         if (attack) {
