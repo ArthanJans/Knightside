@@ -18,7 +18,6 @@ open abstract class Entity(var pos: Vector2, var facing: Direction): Model() {
     abstract var attack: Direction?
 
     fun move(dir: Direction?, map: Map) {
-        var oldpos = Vector2(this.pos)
         if (dir == null || attack != null) {
             moving = false
         } else {
@@ -26,23 +25,27 @@ open abstract class Entity(var pos: Vector2, var facing: Direction): Model() {
 
             var x = cos(dir.radians).toFloat() * this.speed
             var y = -1 * sin(dir.radians).toFloat() * this.speed
-            this.pos.add(x, y)
-            var rect = Rectangle(this.pos.x - 5, this.pos.y - 8, 12f, 8f)
-            if (map.doesOverlap(rect)) {
-                this.pos = Vector2(oldpos)
-                this.pos.add(x, 0f)
-                var rect = Rectangle(this.pos.x - 5, this.pos.y - 8, 12f, 8f)
-                if (map.doesOverlap(rect)) {
-                    this.pos = Vector2(oldpos)
-                    this.pos.add(0f, y)
-                    var rect = Rectangle(this.pos.x - 5, this.pos.y - 8, 12f, 8f)
-                    if (map.doesOverlap(rect)) {
-                        this.pos = Vector2(oldpos)
-                    }
-                }
+
+            //Try move on X axis
+            var tempPos = Vector2(pos)
+            this.pos.add(x, 0f)
+            if (map.doesOverlap(getCollsionRect(pos))) {
+                this.pos = tempPos
             }
+
+            //Try move on Y axis
+            tempPos = Vector2(pos)
+            this.pos.add(0f, y)
+            if (map.doesOverlap(getCollsionRect(pos))) {
+                this.pos = tempPos
+            }
+
             this.facing = dir
         }
+    }
+
+    fun getCollsionRect(pos: Vector2): Rectangle {
+        return Rectangle(pos.x - 5, pos.y - 5, 10f, 10f)
     }
 
     fun attack(dir: Direction?) {
