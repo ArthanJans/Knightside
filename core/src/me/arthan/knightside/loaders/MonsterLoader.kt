@@ -20,6 +20,7 @@ class MonsterLoader(var filepath: String) {
     init {
         model.name = jsonobj.getString("name")
         model.health = jsonobj.getInt("health")
+        model.maxhealth = model.health
         model.mana = jsonobj.getInt("mana")
         model.speed = jsonobj.getFloat("speed")
         view = MonsterView(model, SpriteBatch())

@@ -11,6 +11,7 @@ import kotlin.math.sin
 open abstract class Entity(var pos: Vector2, var facing: Direction): Model() {
 
     abstract var health: Int
+    abstract var maxhealth: Int
     abstract var mana: Int
 
     var moving = false

@@ -2,7 +2,9 @@ package me.arthan.knightside
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Screen
+import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.GL20
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.math.Vector2
 import me.arthan.knightside.controllers.PlayerController
 import me.arthan.knightside.loaders.MonsterLoader
@@ -18,6 +20,8 @@ class MainScreen: Screen{
     var player = Player(Vector2(35f * 16 + 8, 28f * 16 + 8), DOWN)
     var playerView = PlayerView(player, mapView.renderer.batch)
     var playerController = PlayerController(player)
+
+    var shapeRenderer = ShapeRenderer()
 
     var monsters = ArrayList<EntityContainer>()
 
@@ -54,6 +58,15 @@ class MainScreen: Screen{
             monster.view.render(delta)
         }
         mapView.renderForeground(delta)
+
+        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled)
+        shapeRenderer.setColor(Color.WHITE)
+        shapeRenderer.rect(5.0f, 5.0f, 210.0f, 55.0f)
+        shapeRenderer.setColor(Color.GREEN)
+        shapeRenderer.rect(10.0f, 35.0f, 200.0f * (player.health.toFloat() / player.maxhealth.toFloat()), 20.0f)
+        shapeRenderer.setColor(Color.BLUE)
+        shapeRenderer.rect(10.0f, 10.0f, 200.0f, 20.0f)
+        shapeRenderer.end()
     }
 
     override fun resize(width: Int, height: Int) {
