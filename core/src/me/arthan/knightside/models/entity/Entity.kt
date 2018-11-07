@@ -21,6 +21,8 @@ open abstract class Entity(var pos: Vector2, var facing: Direction): Model() {
     var attack: Direction? = null
     var hit: Direction? = null
 
+    var dead = false
+
 
     fun move(dir: Direction?, map: Map) {
         if (dir == null || attack != null  || hit != null) {
@@ -56,7 +58,6 @@ open abstract class Entity(var pos: Vector2, var facing: Direction): Model() {
     fun attack(dir: Direction?, map: Map) {
         moving = false
         if (attack == null) {
-            println(LocalTime.now())
             if (dir != null) {
                 facing = dir
                 attack = dir
@@ -93,8 +94,6 @@ open abstract class Entity(var pos: Vector2, var facing: Direction): Model() {
     }
 
     fun hit(damage: Int, dir: Direction) {
-        println(LocalTime.now())
-        println("" + this.name + " got hit")
         this.health -= damage
         if (this.health <= 0){
             this.die()
@@ -110,7 +109,7 @@ open abstract class Entity(var pos: Vector2, var facing: Direction): Model() {
     }
 
     fun die() {
-        println("" + this.name + " died")
+        dead = true
     }
 
 
