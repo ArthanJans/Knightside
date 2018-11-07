@@ -11,6 +11,8 @@ class MapView(val map: Map): View() {
     val camera = OrthographicCamera((Gdx.graphics.width / 4).toFloat(), (Gdx.graphics.height / 4).toFloat())
     var offsetCamera = Vector2(0f, 0f)
 
+    var views = ArrayList<View>()
+
     init {
         camera.position.set(offsetCamera, 0f)
         camera.update()
@@ -57,6 +59,13 @@ class MapView(val map: Map): View() {
     }
 
     override fun render(delta: Float) {
-
+        renderBackground(delta)
+        for (view in views) {
+            view.render(delta)
+            if (view.remove) {
+//                views.remove(view)
+            }
+        }
+        renderForeground(delta)
     }
 }

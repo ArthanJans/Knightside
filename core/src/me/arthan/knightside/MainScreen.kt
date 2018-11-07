@@ -29,10 +29,13 @@ class MainScreen: Screen{
     var monsters = ArrayList<EntityContainer>()
 
     init {
-        var monster = MonsterLoader("Monster/monster.json")
-        monster.view.spriteBatch = mapLoader.view.renderer.batch
+        mapLoader.view.views.add(playerView)
+        mapLoader.model.entities.add(player)
+        mapLoader.controller.controllers.add(playerController)
+//        var monster = MonsterLoader("Monster/monster.json")
+//        monster.view.spriteBatch = mapLoader.view.renderer.batch
         //TODO("Maybe change the use of EntityContainer class to just use view and controller separately")
-        monsters.add(EntityContainer(monster.model, monster.view, monster.controller))
+//        monsters.add(EntityContainer(monster.model, monster.view, monster.controller))
     }
 
     init {
@@ -48,17 +51,8 @@ class MainScreen: Screen{
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
 
         mapLoader.view.update(Vector2(player.pos.x, player.pos.y), delta)
-        playerController.update(delta, mapLoader.view.map)
-        for(entity in monsters) {
-            entity.controller.update(delta, mapLoader.view.map)
-        }
-
-        mapLoader.view.renderBackground(delta)
-        playerView.render(delta)
-        for(monster in monsters) {
-            monster.view.render(delta)
-        }
-        mapLoader.view.renderForeground(delta)
+        mapLoader.controller.update(delta, mapLoader.view.map)
+        mapLoader.view.render(delta)
 
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled)
         shapeRenderer.setColor(Color.WHITE)

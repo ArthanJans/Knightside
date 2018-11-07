@@ -13,6 +13,10 @@ class MonsterController(val monster: Monster): Controller() {
         for(behaviour in behaviours) {
             behaviour.update(delta, monster)
         }
+        if (monster.dead) {
+            remove = true
+            map.entities.remove(monster)
+        }
         monster.move(monster.facing, map)
     }
 
