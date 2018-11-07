@@ -3,5 +3,12 @@
   "player_spawn": {
     "x": 35,
     "y": 28
-  }
+  },
+  "entities": [
+    {
+      "name": "monster",
+      "x": 35,
+      "y": 25
+    }
+  ]
 }
