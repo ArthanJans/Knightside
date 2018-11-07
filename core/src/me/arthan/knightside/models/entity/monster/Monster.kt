@@ -5,7 +5,7 @@ import me.arthan.knightside.models.Direction
 import me.arthan.knightside.models.entity.Entity
 
 class Monster (pos: Vector2, facing: Direction): Entity(pos, facing) {
-    override var name = "Monster"
+    override var name = "monster"
     override var health = 100
     override var maxhealth = 100
     override var mana = 100

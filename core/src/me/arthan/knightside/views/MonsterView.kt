@@ -4,7 +4,7 @@ import com.badlogic.gdx.graphics.g2d.Batch
 import me.arthan.knightside.models.entity.monster.Monster
 
 class MonsterView(var monster: Monster, var spriteBatch: Batch): View() {
-    private var animationSprite = AnimationSprite("Monster/" + monster.name.toLowerCase())
+    private var animationSprite = AnimationSprite("monster/" + monster.name.toLowerCase())
 
     override fun render(delta: Float) {
         var check = monster.hit

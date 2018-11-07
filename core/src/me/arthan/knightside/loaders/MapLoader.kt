@@ -5,6 +5,7 @@ import me.arthan.knightside.controllers.MapController
 import me.arthan.knightside.utils.decode
 import me.arthan.knightside.views.MapView
 import me.arthan.knightside.models.Map
+import me.arthan.knightside.models.entity.EntityContainer
 
 class MapLoader(filepath: String) {
 
@@ -18,7 +19,7 @@ class MapLoader(filepath: String) {
 
     init {
         for (monster in jsonobj.get("entities")) {
-            var loader = MonsterLoader("Monster/" + monster.getString("name") + ".json")
+            var loader = MonsterLoader("monster/" + monster.getString("name") + ".json")
             var entity = loader.model
             var entityView = loader.view
             var entityController = loader.controller

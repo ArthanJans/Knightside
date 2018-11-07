@@ -25,18 +25,14 @@ class MainScreen: Screen{
     var playerController = PlayerController(player)
 
     var shapeRenderer = ShapeRenderer()
+    var monsters = mapLoader.entities
 
-    var monsters = ArrayList<EntityContainer>()
-
-    init {
-        mapLoader.view.views.add(playerView)
-        mapLoader.model.entities.add(player)
-        mapLoader.controller.controllers.add(playerController)
-//        var monster = MonsterLoader("Monster/monster.json")
+//    init {
+//        var monster = MonsterLoader("monster/monster.json")
 //        monster.view.spriteBatch = mapLoader.view.renderer.batch
-        //TODO("Maybe change the use of EntityContainer class to just use view and controller separately")
+//        //TODO("Maybe change the use of EntityContainer class to just use view and controller separately")
 //        monsters.add(EntityContainer(monster.model, monster.view, monster.controller))
-    }
+//    }
 
     init {
 //        var controller = ControllerLoader("controller.json")
