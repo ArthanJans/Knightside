@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.math.Vector2
 import me.arthan.knightside.controllers.PlayerController
+import me.arthan.knightside.loaders.MapLoader
 import me.arthan.knightside.loaders.MonsterLoader
 import me.arthan.knightside.models.DOWN
 import me.arthan.knightside.models.Map
@@ -16,9 +17,11 @@ import me.arthan.knightside.views.MapView
 import me.arthan.knightside.views.PlayerView
 
 class MainScreen: Screen{
-    var mapView = MapView(Map("Main", "untitled"))
-    var player = Player(Vector2(35f * 16 + 8, 28f * 16 + 8), DOWN)
-    var playerView = PlayerView(player, mapView.renderer.batch)
+
+    var mapLoader = MapLoader("untitled.json")
+
+    var player = Player(mapLoader.player_spawn, DOWN)
+    var playerView = PlayerView(player, mapLoader.view.renderer.batch)
     var playerController = PlayerController(player)
 
     var shapeRenderer = ShapeRenderer()
@@ -27,7 +30,7 @@ class MainScreen: Screen{
 
     init {
         var monster = MonsterLoader("Monster/monster.json")
-        monster.view.spriteBatch = mapView.renderer.batch
+        monster.view.spriteBatch = mapLoader.view.renderer.batch
         //TODO("Maybe change the use of EntityContainer class to just use view and controller separately")
         monsters.add(EntityContainer(monster.model, monster.view, monster.controller))
     }
@@ -44,18 +47,18 @@ class MainScreen: Screen{
         Gdx.gl.glClearColor(0f, 0f, 0f, 1f)
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
 
-        mapView.update(Vector2(player.pos.x, player.pos.y), delta)
-        playerController.update(delta, mapView.map)
+        mapLoader.view.update(Vector2(player.pos.x, player.pos.y), delta)
+        playerController.update(delta, mapLoader.view.map)
         for(entity in monsters) {
-            entity.controller.update(delta, mapView.map)
+            entity.controller.update(delta, mapLoader.view.map)
         }
 
-        mapView.renderBackground(delta)
+        mapLoader.view.renderBackground(delta)
         playerView.render(delta)
         for(monster in monsters) {
             monster.view.render(delta)
         }
-        mapView.renderForeground(delta)
+        mapLoader.view.renderForeground(delta)
 
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled)
         shapeRenderer.setColor(Color.WHITE)
