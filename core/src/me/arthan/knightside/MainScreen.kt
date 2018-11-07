@@ -26,12 +26,10 @@ class MainScreen: Screen{
     var monsters = ArrayList<EntityContainer>()
 
     init {
-        mapView.map.entities.add(player)
         var monster = MonsterLoader("Monster/monster.json")
         monster.view.spriteBatch = mapView.renderer.batch
         //TODO("Maybe change the use of EntityContainer class to just use view and controller separately")
         monsters.add(EntityContainer(monster.model, monster.view, monster.controller))
-        mapView.map.entities.add(monster.model)
     }
 
     init {
