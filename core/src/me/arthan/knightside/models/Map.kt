@@ -5,6 +5,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer
 import com.badlogic.gdx.maps.tiled.TmxMapLoader
 import com.badlogic.gdx.math.Rectangle
 import me.arthan.knightside.models.entity.Entity
+import me.arthan.knightside.utils.decode
 import kotlin.math.ceil
 import kotlin.math.floor
 
@@ -18,6 +19,7 @@ class Map(override var name: String, var filename: String): Model(){
 
     private val fileDir = ""
     private val fileExt = ".tmx"
+    private val jsonFileExt = ".json"
 
     private val filePath: String
         get() = fileDir + filename + fileExt
