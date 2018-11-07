@@ -21,6 +21,7 @@ open abstract class Entity(var pos: Vector2, var facing: Direction): Model() {
     var attack: Direction? = null
     var hit: Direction? = null
 
+
     fun move(dir: Direction?, map: Map) {
         if (dir == null || attack != null  || hit != null) {
             moving = false
