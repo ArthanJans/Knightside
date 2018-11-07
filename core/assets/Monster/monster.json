@@ -1,6 +1,7 @@
 {
   "name": "Slime",
-  "health": 100,
+  "health": 5,
   "mana": 100,
+  "speed": 0.5,
   "behaviours": ["random_move"]
 }
