@@ -60,10 +60,14 @@ class MapView(val map: Map): View() {
 
     override fun render(delta: Float) {
         renderBackground(delta)
-        for (view in views) {
+        var index = 0
+        while (index < views.size) {
+            var view = views[index]
             view.render(delta)
             if (view.remove) {
-//                views.remove(view)
+                views.remove(view)
+            } else {
+                index ++
             }
         }
         renderForeground(delta)

@@ -17,8 +17,12 @@ class MonsterView(var monster: Monster, var spriteBatch: Batch): View() {
             animationSprite.update(monster.getMovingDir(), delta, false)
         }
 
-        spriteBatch.begin()
-        spriteBatch.draw(animationSprite.getRegion(), monster.pos.x - animationSprite.spriteWidth / 2, monster.pos.y - animationSprite.spriteHeight / 2)
-        spriteBatch.end()
+        if (monster.dead) {
+            remove = true
+        } else {
+            spriteBatch.begin()
+            spriteBatch.draw(animationSprite.getRegion(), monster.pos.x - animationSprite.spriteWidth / 2, monster.pos.y - animationSprite.spriteHeight / 2)
+            spriteBatch.end()
+        }
     }
 }

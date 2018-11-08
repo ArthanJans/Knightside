@@ -26,9 +26,7 @@ class Direction(radians: Double) {
 }
 
 fun opposite(dir: Direction): Direction {
-    println(dir.degrees)
     val dir2 = Direction(dir.radians + PI)
-    println(dir2.degrees)
     return dir2
 }
 

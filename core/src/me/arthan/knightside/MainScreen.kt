@@ -25,7 +25,6 @@ class MainScreen: Screen{
     var playerController = PlayerController(player)
 
     var shapeRenderer = ShapeRenderer()
-    var monsters = mapLoader.entities
 
 //    init {
 //        var monster = MonsterLoader("monster/monster.json")
@@ -35,7 +34,9 @@ class MainScreen: Screen{
 //    }
 
     init {
-//        var controller = ControllerLoader("controller.json")
+        mapLoader.model.entities.add(player)
+        mapLoader.view.views.add(playerView)
+        mapLoader.controller.controllers.add(playerController)
     }
 
     override fun show() {
