@@ -95,12 +95,13 @@ open abstract class Entity(var pos: Vector2, var facing: Direction): Model() {
 
     fun hit(damage: Int, dir: Direction) {
         this.health -= damage
-        if (this.health <= 0){
+        if (this.health <= 0) {
             this.die()
-        } else {
-            this.hit = dir
-            this.facing = dir
         }
+
+        this.hit = dir
+        this.facing = dir
+
 
     }
 
