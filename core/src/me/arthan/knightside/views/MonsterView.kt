@@ -13,8 +13,9 @@ class MonsterView(var monster: Monster, var spriteBatch: Batch): View() {
                 monster.finishHit()
                 if (monster.dead) {
                     remove = true
+                } else {
+                    animationSprite.update(monster.hit, 0f, false)
                 }
-                animationSprite.update(monster.getMovingDir(), 0f, false)
             }
         } else {
             animationSprite.update(monster.getMovingDir(), delta, false)

@@ -12,7 +12,7 @@ import kotlin.math.PI
 
 class AnimationSprite(var filename: String) {
     val img =  "$filename.png"
-    val json = "$filename.json"
+    val json = "$filename.png.json"
     var jsonobj: JsonValue
 
     var dir: Direction?
