@@ -1,11 +1,12 @@
 package me.arthan.knightside.controllers
 
 import me.arthan.knightside.controllers.behaviour.Behaviour
+import me.arthan.knightside.controllers.behaviour.moveBehaviour.MoveBehaviour
 import me.arthan.knightside.models.Map
 import me.arthan.knightside.models.entity.monster.Monster
 import java.util.*
 
-class MonsterController(val monster: Monster): Controller() {
+class MonsterController(val monster: Monster, val moveBehaviour: MoveBehaviour): Controller() {
 
     var behaviours = ArrayList<Behaviour>()
 
@@ -17,7 +18,7 @@ class MonsterController(val monster: Monster): Controller() {
             remove = true
             map.entities.remove(monster)
         }
-        monster.move(monster.facing, map)
+        moveBehaviour.update(delta, monster, map)
     }
 
 }
