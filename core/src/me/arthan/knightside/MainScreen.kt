@@ -1,6 +1,7 @@
 package me.arthan.knightside
 
 import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.Input
 import com.badlogic.gdx.Screen
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.GL20
@@ -42,6 +43,11 @@ class MainScreen: Screen{
     override fun render(delta: Float) {
         Gdx.gl.glClearColor(0f, 0f, 0f, 1f)
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
+
+        //TODO Make this work
+//        if (Gdx.input.isKeyPressed(Input.Keys.L)) {
+//            mapLoader.spawnEntity("slime", 35f, 25f)
+//        }
 
         mapLoader.view.update(Vector2(player.pos.x, player.pos.y), delta)
         mapLoader.controller.update(delta, mapLoader.view.map)

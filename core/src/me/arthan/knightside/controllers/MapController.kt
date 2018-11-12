@@ -14,7 +14,7 @@ class MapController(var map: Map): Controller(){
             if (controller.remove) {
                 controllers.remove(controller)
             } else {
-                index ++
+                index++
             }
         }
     }

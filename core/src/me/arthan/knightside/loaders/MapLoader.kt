@@ -14,19 +14,33 @@ class MapLoader(filepath: String) {
     var view = MapView(model)
     var controller = MapController(model)
 
+    var monsters = HashMap<String, MonsterLoader>()
+
     var player_spawn = Vector2(jsonobj.get("player_spawn").getFloat("x") * model.tileWidth + (model.tileWidth / 2), jsonobj.get("player_spawn").getFloat("y") * model.tileHeight + (model.tileHeight / 2))
 
     init {
         for (monster in jsonobj.get("entities")) {
-            var loader = MonsterLoader("monster/" + monster.getString("name") + ".json")
-            var entity = loader.model
-            var entityView = loader.view
-            var entityController = loader.controller
-            entity.pos = Vector2(monster.getFloat("x") * model.tileWidth + (model.tileWidth / 2), monster.getFloat("y") * model.tileHeight + (model.tileHeight / 2))
-            entityView.spriteBatch = view.renderer.batch
-            model.entities.add(entity)
-            view.views.add(entityView)
-            controller.controllers.add(entityController)
+            spawnEntity(monster.getString("name"), monster.getFloat("x"), monster.getFloat("y"))
         }
     }
+
+    fun spawnEntity(name: String, x: Float, y: Float) {
+        val loader: MonsterLoader = if(monsters.containsKey(name)) {
+            monsters[name]!!
+        } else {
+            val monster = MonsterLoader("monster/$name.json")
+            monsters[name] = monster
+            monster
+
+        }
+        var entity = loader.model
+        var entityView = loader.view
+        var entityController = loader.controller
+        entity.pos = Vector2(x * model.tileWidth + (model.tileWidth / 2), y * model.tileHeight + (model.tileHeight / 2))
+        entityView.spriteBatch = view.renderer.batch
+        model.entities.add(entity)
+        view.views.add(entityView)
+        controller.controllers.add(entityController)
+    }
+
 }
