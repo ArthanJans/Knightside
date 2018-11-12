@@ -8,12 +8,8 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.math.Vector2
 import me.arthan.knightside.controllers.PlayerController
 import me.arthan.knightside.loaders.MapLoader
-import me.arthan.knightside.loaders.MonsterLoader
 import me.arthan.knightside.models.DOWN
-import me.arthan.knightside.models.Map
-import me.arthan.knightside.models.entity.EntityContainer
 import me.arthan.knightside.models.entity.Player
-import me.arthan.knightside.views.MapView
 import me.arthan.knightside.views.PlayerView
 
 class MainScreen: Screen{

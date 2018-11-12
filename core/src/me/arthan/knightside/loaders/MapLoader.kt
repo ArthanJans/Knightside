@@ -2,10 +2,9 @@ package me.arthan.knightside.loaders
 
 import com.badlogic.gdx.math.Vector2
 import me.arthan.knightside.controllers.MapController
+import me.arthan.knightside.models.Map
 import me.arthan.knightside.utils.decode
 import me.arthan.knightside.views.MapView
-import me.arthan.knightside.models.Map
-import me.arthan.knightside.models.entity.EntityContainer
 
 class MapLoader(filepath: String) {
 

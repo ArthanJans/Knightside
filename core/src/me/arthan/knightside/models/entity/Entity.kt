@@ -6,7 +6,6 @@ import me.arthan.knightside.models.Direction
 import me.arthan.knightside.models.Map
 import me.arthan.knightside.models.Model
 import me.arthan.knightside.models.opposite
-import java.time.LocalTime
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -17,6 +16,7 @@ open abstract class Entity(var pos: Vector2, var facing: Direction): Model() {
     abstract var mana: Int
 
     var moving = false
+    var knockback = 0f
     abstract var speed: Float
     var attack: Direction? = null
     var hit: Direction? = null
@@ -25,13 +25,18 @@ open abstract class Entity(var pos: Vector2, var facing: Direction): Model() {
 
 
     fun move(dir: Direction?, map: Map) {
-        if (dir == null || attack != null  || hit != null) {
+        if (dir == null || attack != null) {
             moving = false
         } else {
             moving = true
 
             var x = cos(dir.radians).toFloat() * this.speed
             var y = -1 * sin(dir.radians).toFloat() * this.speed
+
+            if (knockback != 0f) {
+                x *= -1 * knockback / this.speed
+                y *= -1 * knockback / this.speed
+            }
 
             //Try move on X axis
             var tempPos = Vector2(pos)
@@ -101,12 +106,14 @@ open abstract class Entity(var pos: Vector2, var facing: Direction): Model() {
 
         this.hit = dir
         this.facing = dir
+        this.knockback = 0.5f
 
 
     }
 
     fun finishHit() {
         this.hit = null
+        this.knockback = 0f
     }
 
     fun die() {
