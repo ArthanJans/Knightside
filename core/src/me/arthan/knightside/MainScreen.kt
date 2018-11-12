@@ -52,11 +52,11 @@ class MainScreen: Screen{
         mapLoader.view.render(delta)
 
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled)
-        shapeRenderer.setColor(Color.WHITE)
+        shapeRenderer.color = Color.WHITE
         shapeRenderer.rect(5.0f, 5.0f, 210.0f, 55.0f)
-        shapeRenderer.setColor(Color.GREEN)
+        shapeRenderer.color = Color.GREEN
         shapeRenderer.rect(10.0f, 35.0f, 200.0f * (player.health.toFloat() / player.maxhealth.toFloat()), 20.0f)
-        shapeRenderer.setColor(Color.BLUE)
+        shapeRenderer.color = Color.BLUE
         shapeRenderer.rect(10.0f, 10.0f, 200.0f, 20.0f)
         shapeRenderer.end()
     }

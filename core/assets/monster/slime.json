@@ -3,5 +3,6 @@
   "health": 5,
   "mana": 100,
   "speed": 0.5,
-  "behaviours": ["random_move"]
+  "behaviours": ["random_move"],
+  "move_behaviour": "default"
 }
