@@ -2,6 +2,7 @@ package me.arthan.knightside.loaders
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.math.Vector2
+import com.badlogic.gdx.utils.JsonValue
 import me.arthan.knightside.controllers.MonsterController
 import me.arthan.knightside.controllers.behaviour.RandomMoveBehaviour
 import me.arthan.knightside.controllers.behaviour.moveBehaviour.MoveForward
@@ -10,9 +11,7 @@ import me.arthan.knightside.models.entity.monster.Monster
 import me.arthan.knightside.utils.decode
 import me.arthan.knightside.views.MonsterView
 
-class MonsterLoader(var filepath: String) {
-
-    var jsonobj = decode(filepath)
+class MonsterLoader(jsonobj: JsonValue) {
 
     var model: Monster = Monster(Vector2(35f * 16 + 8, 31f * 16 + 8), DOWN)
     var view: MonsterView

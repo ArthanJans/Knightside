@@ -1,6 +1,7 @@
 package me.arthan.knightside.loaders
 
 import com.badlogic.gdx.math.Vector2
+import com.badlogic.gdx.utils.JsonValue
 import me.arthan.knightside.controllers.MapController
 import me.arthan.knightside.models.Map
 import me.arthan.knightside.utils.decode
@@ -14,7 +15,7 @@ class MapLoader(filepath: String) {
     var view = MapView(model)
     var controller = MapController(model)
 
-    var monsters = HashMap<String, MonsterLoader>()
+    var monsters = HashMap<String, JsonValue>()
 
     var player_spawn = Vector2(jsonobj.get("player_spawn").getFloat("x") * model.tileWidth + (model.tileWidth / 2), jsonobj.get("player_spawn").getFloat("y") * model.tileHeight + (model.tileHeight / 2))
 
@@ -26,10 +27,11 @@ class MapLoader(filepath: String) {
 
     fun spawnEntity(name: String, x: Float, y: Float) {
         val loader: MonsterLoader = if(monsters.containsKey(name)) {
-            monsters[name]!!
+            MonsterLoader(monsters[name]!!)
         } else {
-            val monster = MonsterLoader("monster/$name.json")
-            monsters[name] = monster
+            var newjson = decode("monster/$name.json")
+            val monster = MonsterLoader(newjson)
+            monsters[name] = newjson
             monster
 
         }

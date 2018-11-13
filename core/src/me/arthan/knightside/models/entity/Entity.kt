@@ -36,6 +36,10 @@ open abstract class Entity(var pos: Vector2, var facing: Direction): Model() {
             if (knockback != 0f) {
                 x *= -1 * knockback / this.speed
                 y *= -1 * knockback / this.speed
+                knockback -= 0.1f
+                if (knockback < 0f) {
+                    knockback = 0f
+                }
             }
 
             //Try move on X axis
@@ -106,14 +110,13 @@ open abstract class Entity(var pos: Vector2, var facing: Direction): Model() {
 
         this.hit = dir
         this.facing = dir
-        this.knockback = 0.5f
+        this.knockback = 2f
 
 
     }
 
     fun finishHit() {
         this.hit = null
-        this.knockback = 0f
     }
 
     fun die() {

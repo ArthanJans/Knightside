@@ -23,6 +23,8 @@ class MainScreen: Screen{
 
     var shapeRenderer = ShapeRenderer()
 
+    var spawntimer = 0f
+
 //    init {
 //        var monster = MonsterLoader("monster/monster.json")
 //        monster.view.spriteBatch = mapLoader.view.renderer.batch
@@ -44,10 +46,17 @@ class MainScreen: Screen{
         Gdx.gl.glClearColor(0f, 0f, 0f, 1f)
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
 
-        //TODO Make this work
-//        if (Gdx.input.isKeyPressed(Input.Keys.L)) {
-//            mapLoader.spawnEntity("slime", 35f, 25f)
-//        }
+        if (Gdx.input.isKeyPressed(Input.Keys.L) && spawntimer == 0f) {
+            mapLoader.spawnEntity("slime", 35f, 25f)
+            spawntimer = 10f
+        }
+
+        if (spawntimer > 0f) {
+            spawntimer -= delta
+            if (spawntimer < 0f) {
+                spawntimer = 0f
+            }
+        }
 
         mapLoader.view.update(Vector2(player.pos.x, player.pos.y), delta)
         mapLoader.controller.update(delta, mapLoader.view.map)
