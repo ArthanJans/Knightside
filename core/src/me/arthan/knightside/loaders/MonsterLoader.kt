@@ -5,10 +5,8 @@ import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.JsonValue
 import me.arthan.knightside.controllers.MonsterController
 import me.arthan.knightside.controllers.behaviour.RandomMoveBehaviour
-import me.arthan.knightside.controllers.behaviour.moveBehaviour.MoveForward
 import me.arthan.knightside.models.DOWN
 import me.arthan.knightside.models.entity.monster.Monster
-import me.arthan.knightside.utils.decode
 import me.arthan.knightside.views.MonsterView
 
 class MonsterLoader(jsonobj: JsonValue) {
@@ -24,10 +22,7 @@ class MonsterLoader(jsonobj: JsonValue) {
         model.mana = jsonobj.getInt("mana")
         model.speed = jsonobj.getFloat("speed")
         view = MonsterView(model, SpriteBatch())
-        controller = MonsterController(model, when(jsonobj.getString("move_behaviour")) {
-            "default" -> MoveForward()
-            else -> MoveForward()
-        })
+        controller = MonsterController(model)
         for(behaviour in jsonobj.get("behaviours").asStringArray()) {
             when(behaviour) {
                 "random_move" -> controller.behaviours.add(RandomMoveBehaviour())

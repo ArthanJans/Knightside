@@ -3,8 +3,13 @@ package me.arthan.knightside.models
 import com.badlogic.gdx.maps.tiled.TiledMap
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer
 import com.badlogic.gdx.maps.tiled.TmxMapLoader
+import com.badlogic.gdx.math.Intersector
+import com.badlogic.gdx.math.Polygon
 import com.badlogic.gdx.math.Rectangle
+import com.badlogic.gdx.math.Vector2
 import me.arthan.knightside.models.entity.Entity
+import me.arthan.knightside.utils.intersectPolygonRectangle
+import me.arthan.knightside.utils.intersectSegmentRectangle
 import kotlin.math.ceil
 import kotlin.math.floor
 
@@ -110,6 +115,26 @@ class Map(override var name: String, var filename: String): Model(){
         var list = ArrayList<Entity>()
         for (entity in entities) {
             if (entity.getCollsionRect().overlaps(rect) && entity.getCollsionRect() != rect) {
+                list.add(entity)
+            }
+        }
+        return list
+    }
+
+    fun overlapEntitiesPolygon(p: Polygon): ArrayList<Entity> {
+        var list = ArrayList<Entity>()
+        for (entity in entities) {
+            if (intersectPolygonRectangle(p, entity.getCollsionRect())) {
+                list.add(entity)
+            }
+        }
+        return list
+    }
+
+    fun overlapEntitiesLine(start: Vector2, end: Vector2): ArrayList<Entity> {
+        var list = ArrayList<Entity>()
+        for (entity in entities) {
+            if (intersectSegmentRectangle(start, end, entity.getCollsionRect())) {
                 list.add(entity)
             }
         }

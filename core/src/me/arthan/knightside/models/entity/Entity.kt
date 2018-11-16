@@ -1,11 +1,13 @@
 package me.arthan.knightside.models.entity
 
+import com.badlogic.gdx.math.Polygon
 import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.math.Vector2
 import me.arthan.knightside.models.Direction
 import me.arthan.knightside.models.Map
 import me.arthan.knightside.models.Model
 import me.arthan.knightside.models.opposite
+import kotlin.math.PI
 import kotlin.math.cos
 import kotlin.math.sin
 
@@ -75,11 +77,7 @@ open abstract class Entity(var pos: Vector2, var facing: Direction): Model() {
             }
             val atk = this.attack
             if (atk != null) {
-                var hitRange = Vector2(pos)
-                var x = cos(atk.radians).toFloat() * 16
-                var y = -1 * sin(atk.radians).toFloat() * 16
-                hitRange.add(x, y)
-                var entities = map.overlapEntities(getCollsionRect(hitRange))
+                val entities = map.overlapEntitiesPolygon(getAttackPolygon(16f, 16f))
 
                 for (entity in entities) {
                     if (entity != this) {
@@ -88,6 +86,17 @@ open abstract class Entity(var pos: Vector2, var facing: Direction): Model() {
                 }
             }
         }
+    }
+
+    private fun getAttackPolygon(width: Float, range: Float): Polygon {
+        val polygon = Polygon()
+        polygon.setPosition(pos.x, pos.y)
+        polygon.vertices = floatArrayOf(0f, width/2, range, width/2, range, -1f * width/2, 0f, -1f * width/2)
+        val deg = attack?.degrees
+        if (deg != null) {
+            polygon.rotate(-1f * deg.toFloat())
+        }
+        return polygon
     }
 
     fun finishAttack() {

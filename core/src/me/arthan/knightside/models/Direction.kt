@@ -8,7 +8,7 @@ import kotlin.math.sin
 class Direction(radians: Double) {
 
 
-//    constructor(degrees: Int): this(degrees/180 * PI)
+    constructor(degrees: Int): this(degrees.toDouble()/180 * PI)
 
     var radians: Double = radians % (2 * PI)
         set(value){
