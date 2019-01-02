@@ -71,5 +71,13 @@ class MapView(val map: Map): View() {
             }
         }
         renderForeground(delta)
+        index = 0
+        while (index < views.size) {
+            var view = views[index]
+            if (view is MonsterView) {
+                view.health(camera)
+            }
+            index ++
+        }
     }
 }
