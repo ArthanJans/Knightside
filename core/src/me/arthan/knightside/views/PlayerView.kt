@@ -1,9 +1,12 @@
 package me.arthan.knightside.views
 
 import com.badlogic.gdx.graphics.g2d.Batch
+import me.arthan.knightside.models.entity.Entity
 import me.arthan.knightside.models.entity.Player
 
-class PlayerView(var player: Player, var spriteBatch: Batch): View() {
+class PlayerView(var player: Player, var spriteBatch: Batch): EntityView() {
+
+    override var entity: Entity = player
 
     private var animationSprite = AnimationSprite("Player/image1")
 

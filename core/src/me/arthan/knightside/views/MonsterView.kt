@@ -5,8 +5,10 @@ import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import me.arthan.knightside.models.entity.monster.Monster
 import com.badlogic.gdx.graphics.Camera
+import me.arthan.knightside.models.entity.Entity
 
-class MonsterView(var monster: Monster, var spriteBatch: Batch): View() {
+class MonsterView(var monster: Monster, var spriteBatch: Batch): EntityView() {
+    override var entity: Entity = monster
     private var shapeRenderer = ShapeRenderer()
     private var animationSprite = AnimationSprite("monster/" + monster.name.toLowerCase())
 

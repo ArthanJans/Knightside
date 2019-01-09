@@ -11,7 +11,7 @@ class MapView(val map: Map): View() {
     val camera = OrthographicCamera((Gdx.graphics.width / 4).toFloat(), (Gdx.graphics.height / 4).toFloat())
     var offsetCamera = Vector2(0f, 0f)
 
-    var views = ArrayList<View>()
+    var views = ArrayList<EntityView>()
 
     init {
         camera.position.set(offsetCamera, 0f)
@@ -61,15 +61,23 @@ class MapView(val map: Map): View() {
     override fun render(delta: Float) {
         renderBackground(delta)
         var index = 0
-        while (index < views.size) {
-            var view = views[index]
+        var newViews: ArrayList<EntityView> = views.clone() as ArrayList<EntityView>
+        newViews.sortByDescending { T -> T.entity.pos.y }
+        for (view in newViews) {
             view.render(delta)
             if (view.remove) {
                 views.remove(view)
-            } else {
-                index ++
             }
         }
+//        while (index < views.size) {
+//            var view = views[index]
+//            view.render(delta)
+//            if (view.remove) {
+//                views.remove(view)
+//            } else {
+//                index ++
+//            }
+//        }
         renderForeground(delta)
         index = 0
         while (index < views.size) {
