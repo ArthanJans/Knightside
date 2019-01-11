@@ -24,7 +24,15 @@ class MonsterView(var monster: Monster, var spriteBatch: Batch): EntityView() {
                 }
             }
         } else {
-            animationSprite.update(monster.getMovingDir(), delta, false)
+            check = monster.attack
+            if (check != null) {
+                if (animationSprite.attack(check, delta)) {
+                    monster.finishAttack()
+                    animationSprite.update(monster.getMovingDir(), 0f, false)
+                }
+            } else {
+                animationSprite.update(monster.getMovingDir(), delta, false)
+            }
         }
 
         spriteBatch.begin()

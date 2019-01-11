@@ -18,7 +18,7 @@ open abstract class Entity(var pos: Vector2, var facing: Direction): Model() {
     abstract var mana: Int
 
     var moving = false
-    var knockback = 0f
+    var knockback: Vector2 = Vector2(0f, 0f)
     abstract var speed: Float
     var attack: Direction? = null
     var hit: Direction? = null
@@ -27,22 +27,38 @@ open abstract class Entity(var pos: Vector2, var facing: Direction): Model() {
 
 
     fun move(dir: Direction?, map: Map) {
-        if (dir == null || attack != null) {
+        if (!knockback.isZero) {
+            var x = knockback.x
+            var y = -1 * knockback.y
+
+            //Try move on X axis
+            var tempPos = Vector2(pos)
+            this.pos.add(x, 0f)
+            if (map.doesOverlap(getCollsionRect(pos))) {
+                this.pos = tempPos
+            }
+
+            //Try move on Y axis
+            tempPos = Vector2(pos)
+            this.pos.add(0f, y)
+            if (map.doesOverlap(getCollsionRect(pos))) {
+                this.pos = tempPos
+            }
+
+            if (knockback.len() < 0.1f) {
+                knockback.x = 0f
+                knockback.y = 0f
+            } else {
+                knockback.setLength(knockback.len() - 0.1f)
+            }
+
+        } else if (dir == null || attack != null) {
             moving = false
         } else {
             moving = true
 
             var x = cos(dir.radians).toFloat() * this.speed
             var y = -1 * sin(dir.radians).toFloat() * this.speed
-
-            if (knockback != 0f) {
-                x *= -1 * knockback / this.speed
-                y *= -1 * knockback / this.speed
-                knockback -= 0.1f
-                if (knockback < 0f) {
-                    knockback = 0f
-                }
-            }
 
             //Try move on X axis
             var tempPos = Vector2(pos)
@@ -88,6 +104,24 @@ open abstract class Entity(var pos: Vector2, var facing: Direction): Model() {
         }
     }
 
+    fun attack(dir: Direction?, entity: Entity) {
+        moving = false
+        if (attack == null) {
+            if (dir != null) {
+                facing = dir
+                attack = dir
+            } else {
+                attack = facing
+            }
+            val atk = this.attack
+            if (atk != null) {
+                if (entity != this) {
+                    entity.hit(1, opposite(atk))
+                }
+            }
+        }
+    }
+
     private fun getAttackPolygon(width: Float, range: Float): Polygon {
         val polygon = Polygon()
         polygon.setPosition(pos.x, pos.y)
@@ -119,7 +153,9 @@ open abstract class Entity(var pos: Vector2, var facing: Direction): Model() {
 
         this.hit = dir
         this.facing = dir
-        this.knockback = 2f
+        this.knockback = Vector2(1f, 1f)
+        this.knockback.setLength(2f)
+        this.knockback.setAngle(opposite(dir).degrees.toFloat())
 
 
     }

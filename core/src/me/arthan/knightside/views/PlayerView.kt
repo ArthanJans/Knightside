@@ -18,7 +18,19 @@ class PlayerView(var player: Player, var spriteBatch: Batch): EntityView() {
                 animationSprite.update(player.getMovingDir(), 0f, false)
             }
         } else {
-            animationSprite.update(player.getMovingDir(), delta, false)
+            check = player.hit
+            if (check != null) {
+                if (animationSprite.hit(check, delta)) {
+                    player.finishHit()
+                    if (player.dead) {
+                        remove = true
+                    } else {
+                        animationSprite.update(player.hit, 0f, false)
+                    }
+                }
+            } else {
+                animationSprite.update(player.getMovingDir(), delta, false)
+            }
         }
 
         spriteBatch.begin()
