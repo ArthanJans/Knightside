@@ -11,7 +11,7 @@ class RandomMoveBehaviour: Behaviour() {
 
     override fun update(delta: Float, entity: Monster, map: Map) {
         if(rand.nextInt(100) == 4) {
-//            entity.facing = Direction(rand.nextInt(360))
+            entity.facing = Direction(rand.nextInt(360))
         }
         entity.attackMove(entity.facing, map)
     }
